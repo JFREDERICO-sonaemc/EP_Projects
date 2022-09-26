@@ -1,0 +1,24 @@
+##SOURCES - CREATE##
+source -add retekmm:validity v1 /ibm_rational/event_processing/producers/retekmm-validity#v1.json
+
+##CHANNELS - CREATE##
+channel -add mrsmm-validity-channel /ibm_rational/event_processing/channels/mrsmm-validity-channel.json
+
+##FILTERS - CREATE##
+
+##AUTH - CREATE##
+
+##DATABASE SCRIPTS - CREATE##
+
+
+##SINKS - CREATE##
+sink-http -add mrsmm-validity-sink https://api.sonae.pt/v1/applications/mrsmm/validities/sendValidities NONE POST NONE false false at-least-once
+sink-http -add-header mrsmm-validity-sink apikey XXXXXXXXXXXXXX
+
+
+##DESTINATIONS - ADD##
+source -add-destination retekmm:validity v1 mrsmm-validity-channel
+channel -add-destination mrsmm-validity-channel mrsmm-validity-sink
+
+
+
